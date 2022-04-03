@@ -1,0 +1,20 @@
+public class Solution 
+{
+    public int[] TwoSum(int[] nums, int target) 
+    {
+        //Optimized Solution O(n) - for Non sorted order - using dictionary
+        Dictionary<int,int> dict = new Dictionary<int,int>();
+        int remainder = 0;
+        
+        for(int i=0; i<nums.Length; i++)
+          if(dict.ContainsKey(nums[i]) == false)
+            dict.Add(nums[i],i);
+        
+        for(int j=0; j<nums.Length; j++)
+        {
+            remainder = target - nums[j];
+            if(dict.ContainsKey(remainder) && dict[remainder] != j)
+                return new int[]{j,dict[remainder]};
+        }
+      return new int[]{-1,-1};
+    }   
