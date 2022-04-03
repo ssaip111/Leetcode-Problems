@@ -1,0 +1,25 @@
+//O(nlogn) using 2 Pointers
+public class Solution {
+    public int MaxOperations(int[] nums, int k) {
+        int count = 0;
+        Array.Sort(nums);
+        List<int> list = nums.ToList();
+     
+        int left=0;
+        int right=list.Count-1;
+        while(left < right)
+        {
+            if(list[left] + list[right] == k)
+            {
+                left++;
+                right--;
+                count++;
+            }
+            else if(list[left] + list[right] > k)
+                right--;
+            else
+                left++;
+        }
+        return count;
+    }
+}
