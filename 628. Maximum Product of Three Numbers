@@ -1,0 +1,58 @@
+//O(nlogn) – but will fail if num[0] <0 and nums[1] > 0.
+public class Solution {
+    public int MaximumProduct(int[] nums) {
+        
+        Array.Sort(nums);
+        int check1 = nums[nums.Length-1] * nums[nums.Length-2]*nums[nums.Length-3];
+        int check2 = nums[0]*nums[1]*nums[nums.Length-1];
+        if(check1 > check2)
+            return check1;
+        
+        return check2;
+    }
+}
+
+//O(n) – check for 1st 2 Min values and last 3 max values.
+public class Solution {
+    public int MaximumProduct(int[] nums) {
+        
+        int firstValue = Int32.MaxValue;
+        int secondValue = Int32.MaxValue;
+        int lastValue = Int32.MinValue;
+        int secondLastValue = Int32.MinValue;
+        int thirdLastValue = Int32.MinValue;
+        
+        for(int i=0; i<nums.Length; i++)
+        {
+            if(nums[i] > lastValue)
+            {
+                thirdLastValue = secondLastValue;
+                secondLastValue = lastValue;
+                lastValue = nums[i];
+            }
+            else if(nums[i] > secondLastValue)
+            {
+                thirdLastValue = secondLastValue;
+                secondLastValue = nums[i];
+            }
+            else if(nums[i] > thirdLastValue)
+                thirdLastValue = nums[i];
+            
+            if(nums[i] < firstValue)
+            {
+               secondValue = firstValue;
+               firstValue = nums[i];
+            }
+            else if(nums[i] < secondValue)
+                secondValue = nums[i];
+                
+        }
+        
+        return  new int[] {
+            lastValue*secondLastValue*thirdLastValue,
+            lastValue*secondLastValue*firstValue,
+            lastValue*firstValue*secondValue,
+            
+        }.Max();
+    }
+}
